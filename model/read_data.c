@@ -74,9 +74,11 @@ printf("Filters:\n");
 while (fgets(line, sizeof(line), fp)) 
 {
     i++;
+    //printf("Index: %d\n", i);
     if (i >= 0)
     {
         sscanf(line, "%c %lf %lf %lf", &filter, &MJD1, &V1, &sgm);
+	printf("Filter: %d\n", filter);
         MJD_obs[i] = MJD1;
         if (i>0 && MJD_obs[i] <= MJD_obs[i-1])
         {
