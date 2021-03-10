@@ -70,17 +70,17 @@ int k;
 int W_filter = -1;
 int D_filter = -1;
 double sgm, MJD1, V1;
+char aux;
 printf("Filters:\n");
 while (fgets(line, sizeof(line), fp)) 
 {
     i++;
-    //printf("Index: %d\n", i);
+    printf("Index: %d\n", i);
     if (i >= 0)
     {
-        sscanf(line, "%c %lf %lf %lf", &filter, &MJD1, &V1, &sgm);
-	printf("Filter: %d\n", filter);
-        MJD_obs[i] = MJD1;
-        if (i>0 && MJD_obs[i] <= MJD_obs[i-1])
+        sscanf(line, "%c %lf %lf %lf %c", &filter, &MJD1, &V1, &sgm, &aux);
+	MJD_obs[i] = MJD1;
+	if (i>0 && MJD_obs[i] <= MJD_obs[i-1])
         {
             printf("Error: the data have to be sorted chronologically!\n");
             exit(1);
@@ -89,7 +89,7 @@ while (fgets(line, sizeof(line), fp))
         hData[i].w = 1.0/(sgm*sgm);
         // Finding all unique filters:
         int found = 1;
-        for (k=0; k<j; k++)
+	for (k=0; k<j; k++)
         {
             if (filter == all_filters[k])
             {
@@ -106,7 +106,6 @@ while (fgets(line, sizeof(line), fp))
             if (filter == 'D')
                 D_filter = j;
             j++;
-            printf("%d: %c\n", j, filter);
         }
         // Translating filter char to filter number:
         for (k=0; k<j; k++)
@@ -122,9 +121,7 @@ if (*N_filters > N_FILTERS)
     fprintf(stderr,"Too many filters - increase N_FILTERS parameter! %d\n", *N_filters);
     exit (1);
 }
-
 fclose(fp);
-
 // Reading the three ephemerides files and computing the data values:
 fpA = fopen("asteroid.eph", "r");
 fpE = fopen("earth.eph", "r");
@@ -145,7 +142,6 @@ while (fgets(lineS, sizeof(lineS), fpS))
     if (strcmp(lineS, "$$SOE\n") == 0)
         break;
 }
-
 j = -1;
 double JD;
 double Xa,Ya,Za, Xe,Ye,Ze, Xs,Ys,Zs;
@@ -235,7 +231,6 @@ while (fgets(lineA, sizeof(lineA), fpA))
 fclose(fpA);
 fclose(fpE);
 fclose(fpS);
-
 // Converting the observed data
 double E, S;
 #ifdef SEGMENT
@@ -285,7 +280,6 @@ for (i=0; i<*N_data; i++)
     hhData[i].S_z = hhData[i].S_z / S;
     
 }
-
 
 
 #ifdef DUMP_DV
@@ -374,6 +368,5 @@ if (Nplot > 0)
 free(hhData);
 free(hhPlot);
 #endif
-    
 return 0;
 }

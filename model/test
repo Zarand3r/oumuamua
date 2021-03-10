@@ -1,0 +1,4 @@
+make clean; make
+cd ../
+./asteroid  -Nstages 2 -seed 0 -keep  -i Data/light_curve.txt  -o results.txt  -Ppsi 2 4800
+#./asteroid -t -reopt -best -seed 0 -i Data/light_curve.txt  -o results.txt  -m thieta_M  phi_M  phi_0  Tb  Tc  Ta  c  b  E'  L  psi_0
