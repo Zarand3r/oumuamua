@@ -36,8 +36,8 @@
 # TREND : detrending the time evolution of the brightness, via the scaling parameter a (proxy for G-parameter from HG reflectivity law) - adds one free parameter A
 
 ARCH=sm_60
-# OPT=--ptxas-options=-v -arch=$(ARCH) -DP_PSI -DTORQUE
-OPT=--ptxas-options=-v -arch=$(ARCH) -DP_PSI -DTORQUE -DINTERP -DANIMATE
+OPT=--ptxas-options=-v -arch=$(ARCH) -DP_PSI -DTORQUE
+# OPT=--ptxas-options=-v -arch=$(ARCH) -DP_PSI -DTORQUE -DINTERP -DANIMATE
 INC=-I/usr/include/cuda -I.
 LIB=-lpng
 DEBUG=-O2
